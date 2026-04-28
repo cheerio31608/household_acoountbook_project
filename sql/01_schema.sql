@@ -7,6 +7,7 @@ CREATE TABLE users (
     user_id BIGINT PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
+    balance DECIMAL(15,2) NOT NULL DEFAULT 0.00,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -14,6 +15,7 @@ COMMENT ON TABLE users IS '사용자 기본 정보 테이블';
 COMMENT ON COLUMN users.user_id IS '사용자 고유 ID (PK)';
 COMMENT ON COLUMN users.email IS '로그인 이메일 (계정명)';
 COMMENT ON COLUMN users.password_hash IS '암호화된 비밀번호 해시값';
+COMMENT ON COLUMN users.balance IS '현재 보유 잔액';
 COMMENT ON COLUMN users.created_at IS '가입 일시';
 
 -- 1.2. 카테고리 관리 (Categories)
@@ -39,6 +41,7 @@ CREATE TABLE transactions (
     category_id BIGINT NOT NULL,
     amount DECIMAL(15,2) NOT NULL,
     balance_before DECIMAL(15,2) NOT NULL,
+    balance_after DECIMAL(15,2) NOT NULL,
     transaction_type VARCHAR(20) NOT NULL, -- INCOME / EXPENSE
     description TEXT,
     vendor_name VARCHAR(255),
@@ -53,6 +56,7 @@ COMMENT ON COLUMN transactions.user_id IS '사용자 ID (FK)';
 COMMENT ON COLUMN transactions.category_id IS '카테고리 ID (FK)';
 COMMENT ON COLUMN transactions.amount IS '거래 금액 (항상 양수)';
 COMMENT ON COLUMN transactions.balance_before IS '거래 발생 직전 잔액';
+COMMENT ON COLUMN transactions.balance_after IS '거래 발생 직후 잔액';
 COMMENT ON COLUMN transactions.transaction_type IS '거래 유형 (INCOME / EXPENSE)';
 COMMENT ON COLUMN transactions.description IS '거래 설명';
 COMMENT ON COLUMN transactions.vendor_name IS '가맹점 또는 거래처 이름';

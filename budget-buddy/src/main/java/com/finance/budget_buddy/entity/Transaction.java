@@ -33,6 +33,9 @@ public class Transaction {
     @Column(name = "balance_before", nullable = false, precision = 15, scale = 2)
     private BigDecimal balanceBefore;
 
+    @Column(name = "balance_after", nullable = false, precision = 15, scale = 2)
+    private BigDecimal balanceAfter;
+
     @Column(name = "transaction_type", nullable = false, length = 20)
     private String transactionType; // INCOME / EXPENSE
 
