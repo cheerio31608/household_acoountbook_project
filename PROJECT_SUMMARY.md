@@ -19,17 +19,17 @@
 *   **Transactions**: 거래 내역 (금액, 전 잔액, 유형, 가맹점 정보 포함)
 *   **AI Reports**: AI가 생성한 분석 결과 저장
 
-## 4. 현재 진행 상황
-*   ✅ **Base Implementation**: Spring Boot 프로젝트 초기 설정 및 `Transaction` 엔티티/리포지토리 구현 완료.
-*   ✅ **Database Design**: 전체 스키마(DDL) 및 샘플 데이터(DML) 구축 완료.
-*   ✅ **Sample Analysis**: 수동으로 분석된 지출 리포트 샘플(`analysis_report.md`) 존재 (식비 58.5% 집중 등의 인사이트 도출).
-*   ⚠️ **Architecture**: 현재 Controller가 Repository를 직접 호출하는 2계층 구조. (Service 레이어 도입 필요)
+## 4. 진행 타임라인 및 현재 상황
+*   **📅 2026-04-28 (오늘)**
+    *   ✅ **아키텍처 고도화**: Controller -> Service -> Repository 3계층 구조 확립.
+    *   ✅ **데이터 무결성 강화**: `Transaction` 테이블에 `balance_after` 스냅샷 도입 및 `User.balance` 원자적 갱신 로직 구현.
+    *   ✅ **전역 예외 처리**: `@RestControllerAdvice`와 커스텀 `BusinessException`을 이용한 에러 핸들링 체계 구축.
+    *   ✅ **품질 보증**: Mockito를 활용한 `TransactionService` 단위 테스트 완료 (비즈니스 로직 검증).
 
 ## 5. 향후 과제 및 고민사항 (Next Steps)
-1.  **Service 레이어 도입**: 비즈니스 로직(거래 시 잔액 검증, 기간별 합계 등) 분리.
-2.  **AI Integration**: Gemini API를 연동하여 가계부 데이터를 프롬프트로 변환하고 분석 리포트를 자동 생성하는 로직 구현.
-3.  **Global Exception Handling**: 금융 데이터 특성을 고려한 예외 처리 시스템 구축.
-4.  **Security**: 사용자 인증 및 인가(Spring Security) 도입 예정.
+1.  **데이터 수집 자동화 (Data Ingestion)**: 대량의 Mock 데이터 생성 API 또는 CSV 파일 업로드 기능 구현.
+2.  **통계 쿼리 최적화**: QueryDSL을 도입하여 AI 분석을 위한 기간별/카테고리별 요약 데이터 추출.
+3.  **AI Integration**: Gemini API 연동 및 비동기(`@Async`) 리포트 생성 로직 구현.
 
 ## 6. 조언이 필요한 부분
 *   금융 데이터의 무결성을 보장하기 위한 Service 레이어 설계 베스트 프랙티스.
